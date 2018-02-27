@@ -1,7 +1,13 @@
+import argparse
 from termcolor import colored
 from nmb.NetBIOS import NetBIOS
 from netaddr import IPNetwork
 import sys
+
+parser = argparse.ArgumentParser()
+parser.add_argument("NetRange", help="Local Netwrok Range to Scan")
+args = parser.parse_args()
+
 
 def queryNam(name):
     n = NetBIOS(broadcast=True, listen_port=0)
@@ -13,9 +19,11 @@ def queryIPForName(address):
     hostname = n.queryIPForName(address, timeout=0.2)
     return hostname
 
-print colored("Scanning....Please Wait\n", "green") 
+print colored("Scanning....%s Please Wait\n", "green") % args.NetRange 
 
-for cider in IPNetwork('192.168.2.0/24'):
+
+for cider in IPNetwork(args.NetRange):
+
 	hostname = queryIPForName('%s' % cider)
 
 	if hostname != None:
