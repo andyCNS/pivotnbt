@@ -21,20 +21,24 @@ def queryIPForName(address):
 
 print colored("Scanning....%s Please Wait\n", "green") % args.NetRange 
 
+try:
 
-for cider in IPNetwork(args.NetRange):
+	for cider in IPNetwork(args.NetRange):
 
-	hostname = queryIPForName('%s' % cider)
+		hostname = queryIPForName('%s' % cider)
 
-	if hostname != None:
+		if hostname != None:
 		
-		str2 = hostname[0]
+			str2 = hostname[0]
 
-		ip = queryNam(str2)
+			ip = queryNam(str2)
 
-		if ip != None:
-			print colored("Number of Piviot Points: %s ", "yellow") % len(ip)
-#			print hostname[:5]
-			print colored("Multi-Honed Host Detected: %s", "red") % str2
-			print colored("Associated IP's: %s", "green") % ip
-			print "============================================="
+			if ip != None and len(ip) > 1:
+				print colored("Number of Piviot Points: %s ", "yellow") % len(ip)
+#				print hostname[:5]
+				print colored("Multi-Honed Host Detected: %s", "red") % str2
+				print colored("Associated IP's: %s", "green") % ip
+				print "============================================="
+except:
+
+	print colored("\n\nuh oh - Looks like an error - check input and try again.", "red")
